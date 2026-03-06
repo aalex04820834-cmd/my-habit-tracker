@@ -1,54 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Monthly Habit Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Habit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
-
 <body>
 
-    <div class="container">
-        <h1>Monthly Habit Tracker</h1>
-
-        <div class="chart-outer-container">
-            <div class="chart-container">
-                <canvas id="habitChart"></canvas>
+<div class="app-container">
+    
+    <header class="header">
+        <div class="header-left">
+            <h1>Monthly <span>Habits</span></h1>
+            <div class="dashboard-stats">
+                <div class="datetime">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span id="currentDate">Loading...</span> 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span id="currentTime">--:--</span>
+                </div>
             </div>
         </div>
 
         <div class="controls">
-            <input type="text" id="habitInput" placeholder="Habit Name">
-            <input type="number" id="goalInput" placeholder="Goal">
-            <button id="addHabitBtn">Add Habit</button>
+            <input type="text" id="habitInput" placeholder="New habit (e.g., Yoga)">
+            <input type="number" id="goalInput" placeholder="Goal" min="1" max="31">
+            <button id="addHabitBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Habit
+            </button>
+        </div>
+    </header>
+
+    <div class="stats-row">
+        <div class="calendar-panel" id="calendarWidget"></div>
+
+        <div class="success-rate-panel">
+            <div class="sr-title">SUCCESS RATE</div>
+            <div class="sr-value" id="successRateValue">0%</div>
+            <div class="sr-hearts">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#f87171" stroke="#f87171" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#f87171" stroke="#f87171" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </div>
+            <div class="sr-subtitle" id="successRateMessage">LET'S GO!</div>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="col-action"></th>
-                        <th class="col-habit">Habit</th>
-                        <th class="col-goal">Goal</th>
-                        <script>
-                            for (let i = 1; i <= 31; i++) {
-                                document.write("<th class='col-day'>" + i + "</th>");
-                            }
-                        </script>
-                        <th class="col-progress">Progress</th>
-                    </tr>
-                </thead>
-                <tbody id="habitTable"></tbody>
-            </table>
+        <div class="donut-charts-panel">
+            <div class="donut-wrapper">
+                <div class="donut-chart" id="donut30" style="--p: 0; --c: #ff5e62;">
+                    <div class="donut-inner"><span id="val30">0%</span></div>
+                </div>
+                <div class="donut-label">MONTHLY<br>PROGRESS</div>
+            </div>
+            <div class="donut-wrapper">
+                <div class="donut-chart" id="donut15" style="--p: 0; --c: #00d2ff;">
+                    <div class="donut-inner"><span id="val15">0%</span></div>
+                </div>
+                <div class="donut-label">15 DAYS<br>PROGRESS</div>
+            </div>
+            <div class="donut-wrapper">
+                <div class="donut-chart" id="donut7" style="--p: 0; --c: #fdbb2d;">
+                    <div class="donut-inner"><span id="val7">0%</span></div>
+                </div>
+                <div class="donut-label">LAST 7 DAYS<br>PROGRESS</div>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <div class="table-panel">
+        <div class="table-wrapper">
+            <div class="scroll-canvas">
+                
+                <div class="chart-container">
+                    <canvas id="habitChart"></canvas>
+                </div>
 
+                <table class="habit-table">
+                    <thead>
+                        <tr id="table-header"></tr>
+                    </thead>
+                    <tbody id="habitTable"></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
