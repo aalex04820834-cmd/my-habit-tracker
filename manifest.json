@@ -7,3 +7,24 @@
   "theme_color": "#00d09c",
   "icons": [{ "src": "icon.png", "sizes": "192x192", "type": "image/png" }]
 }
+
+{
+  "short_name": "HabitTracker",
+  "name": "Premium Habit Tracker",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a"
+}
