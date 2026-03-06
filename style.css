@@ -526,6 +526,22 @@ input[type="checkbox"]:checked::after {
     } 
 }
 
+/* --- Responsive Adjustments --- */
+
+/* Tablets and smaller laptops (Medium Screens like iPad) */
+@media screen and (max-width: 1100px) { 
+    .stats-row { 
+        /* Calendar stays 320px, Success Rate takes the rest of the row */
+        grid-template-columns: 320px 1fr; 
+    } 
+    .donut-charts-panel { 
+        /* Push the donuts to the second row and span the whole width */
+        grid-column: 1 / -1; 
+        flex-wrap: wrap; 
+        gap: 20px;
+    } 
+}
+
 /* Mobile Phones (Small Screens) */
 @media screen and (max-width: 600px) {
     /* 1. Stack everything vertically on phones */
@@ -568,4 +584,97 @@ input[type="checkbox"]:checked::after {
     input[type="checkbox"]:checked::after { font-size: 12px; }
     
     .dropdown-content { left: 25px; }
+
+    /* --- Fix Chart & Table Alignment for Mobile --- */
+    
+    /* New Math for Mobile:
+       Action (35px) + Habit (110px) + 31 Days (1116px) + Progress (150px) = 1411px
+    */
+    .scroll-canvas, .habit-table { 
+        width: 1411px !important; 
+    }
+
+    /* Padding exactly matches the frozen left columns (35 + 110) */
+    .chart-container { 
+        padding-left: 145px !important; 
+        padding-right: 150px !important; 
+    }
+}
+
+
+
+/* --- New Logo Styles --- */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.app-logo {
+    height: 40px; /* Adjust based on your preferred size */
+    width: auto;
+    border-radius: 50%;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text h1 {
+    font-size: 20px; /* Slightly smaller than before to fit next to logo */
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.logo-text p {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin: 0;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 600px) {
+    .logo-wrapper {
+        justify-content: flex-start;
+        width: 100%;
+        gap: 10px;
+    }
+    .app-logo { height: 30px; }
+    .logo-text h1 { font-size: 16px; }
+    .logo-text p { font-size: 10px; }
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.main-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    /* Optional: adds a slight glow to match your accent color */
+    filter: drop-shadow(0 0 5px var(--accent-glow));
+}
+
+/* Adjust heading to align with logo */
+.logo-section h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 600px) {
+    .main-logo {
+        width: 28px;
+        height: 28px;
+    }
+    .logo-section h1 {
+        font-size: 20px;
+    }
 }
