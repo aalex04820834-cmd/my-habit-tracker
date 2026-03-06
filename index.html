@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Habit Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Monthly Habit Tracker</h1>
+
+        <div class="chart-outer-container">
+            <div class="chart-container">
+                <canvas id="habitChart"></canvas>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="habitInput" placeholder="Habit Name">
+            <input type="number" id="goalInput" placeholder="Goal">
+            <button id="addHabitBtn">Add Habit</button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-action"></th>
+                        <th class="col-habit">Habit</th>
+                        <th class="col-goal">Goal</th>
+                        <script>
+                            for (let i = 1; i <= 31; i++) {
+                                document.write("<th class='col-day'>" + i + "</th>");
+                            }
+                        </script>
+                        <th class="col-progress">Progress</th>
+                    </tr>
+                </thead>
+                <tbody id="habitTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
